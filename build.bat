@@ -10,6 +10,7 @@ pip install random
 pip install uuid
 pip install requests
 pip install shutil
+pip install Win32Security
 echo ---
 
 REM Delete old installer executable if it exists
