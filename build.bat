@@ -4,7 +4,6 @@ echo ---
 pip install pyinstaller
 pip install json
 pip install subprocess
-pip install pathlib
 pip install pyuac
 pip install string
 pip install random
