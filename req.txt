@@ -1,0 +1,11 @@
+json
+subprocess
+pathlib
+pyuac
+string
+random
+uuid
+requests
+shutil
+lib.file
+pyinstaller
