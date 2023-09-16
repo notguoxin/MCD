@@ -1,0 +1,37 @@
+name: Build and Release
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions: write-all
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run build.bat
+      run: .\build.bat
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: 1.0.1
+        release_name: Release ${{ steps.extract_ref.outputs.ref }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./installer.exe
+        asset_name: installer.exe
+        asset_content_type: application/octet-stream
