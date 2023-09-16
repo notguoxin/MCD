@@ -20,8 +20,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: 1.0.1
-        release_name: Release ${{ steps.extract_ref.outputs.ref }}
+        tag_name: 1.0.0
+        release_name: Release "Build 1"
         draft: false
         prerelease: false
 
