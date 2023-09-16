@@ -14,11 +14,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Get tags
+        id: get_tags
+        run: |
+          git fetch --tags
+          tags=$(git tag --sort=-v:refname)
+          echo "Tags: $tags"
+          echo "::set-output name=tags::$tags"
+        shell: bash
+
       - name: Get latest tag
         id: get_latest_tag
         run: |
-          # Get the latest tag
-          latest_tag=$(git describe --tags --abbrev=0)
+          tags="${{ steps.get_tags.outputs.tags }}"
+          latest_tag=$(echo "$tags" | head -n 1)
           echo "Latest tag: $latest_tag"
           echo "::set-output name=tag::$latest_tag"
         shell: bash
@@ -26,7 +35,7 @@ jobs:
       - name: Parse and increment tag
         id: parse_and_increment_tag
         run: |
-          # Parse the latest tag and increment the version number
+          # Parse the latest tag and increment the patch component
           latest_tag="${{ steps.get_latest_tag.outputs.tag }}"
           IFS='.' read -ra version <<< "$latest_tag"
           major="${version[0]}"
