@@ -14,17 +14,19 @@ jobs:
     - name: Get latest release tag
       id: latesttag
       run: |
-        LATEST_TAG=$(curl --silent "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest" | jq -r .tag_name)
-        echo "::set-output name=tag::${LATEST_TAG}"
+        $LATEST_TAG = Invoke-RestMethod -Uri "https://api.github.com/repos/$env:GITHUB_REPOSITORY/releases/latest" -Headers @{"Authorization"="token $env:GITHUB_TOKEN"} | Select-Object -ExpandProperty tag_name
+        echo "::set-output name=tag::$LATEST_TAG"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Increment version
       id: incversion
       run: |
-        LATEST_TAG=${{ steps.latesttag.outputs.tag }}
-        NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
-        echo "::set-output name=tag::${NEW_TAG}"
+        $LATEST_TAG = "${{ steps.latesttag.outputs.tag }}"
+        $NEW_TAG = $LATEST_TAG.Split('.')
+        $NEW_TAG[-1] = string
+        $NEW_TAG = $NEW_TAG -join '.'
+        echo "::set-output name=tag::$NEW_TAG"
 
     - name: Run build.bat
       run: .\build.bat
