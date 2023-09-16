@@ -11,6 +11,21 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Get latest release tag
+      id: latesttag
+      run: |
+        LATEST_TAG=$(curl --silent "https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest" | jq -r .tag_name)
+        echo "::set-output name=tag::${LATEST_TAG}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Increment version
+      id: incversion
+      run: |
+        LATEST_TAG=${{ steps.latesttag.outputs.tag }}
+        NEW_TAG=$(echo $LATEST_TAG | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
+        echo "::set-output name=tag::${NEW_TAG}"
+
     - name: Run build.bat
       run: .\build.bat
 
@@ -20,8 +35,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: 1.0.0
-        release_name: "Build 1"
+        tag_name: ${{ steps.incversion.outputs.tag }}
+        release_name: "Build ${{ steps.incversion.outputs.tag }}"
         draft: false
         prerelease: false
 
