@@ -47,6 +47,9 @@ jobs:
           echo "::set-output name=new_tag::$new_tag"
         shell: bash
 
+      - name: Build
+        run: .\build.bat
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
