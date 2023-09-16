@@ -77,7 +77,7 @@ def main():
     try:
         print(
             
-                "Project: Minecraft Auto installer nStable: 1.0.1\n Full Version: 1.28.5\nAuthor: GuoXin\n",
+                "Project: Minecraft Auto installer nStable: 1.0.1\n Full Version: 1.28.5\nAuthor: GuoXin\nFork of https://github.com/notguoxin/MCFS\n",
         )
         destination_folder = os.path.join(Path.home(), "Desktop", "MCC")
         print(f"[~] Set temp directory to {temp_dir}")
