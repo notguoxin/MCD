@@ -1,8 +1,17 @@
 @echo off
 setlocal
-echo.
+echo ---
 pip install pyinstaller
-echo .
+pip install json
+pip install subprocess
+pip install pathlib
+pip install pyuac
+pip install string
+pip install random
+pip install uuid
+pip install requests
+pip install shutil
+echo ---
 pip install -r ./req.txt
 
 REM Delete old installer executable if it exists
