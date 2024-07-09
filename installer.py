@@ -83,7 +83,7 @@ def main():
         print(f"[~] Set temp directory to {temp_dir}")
         print(f"[~] Set the destination_folder to {destination_folder}")
         # download_file("https://github.com/MCreator/MCreator/releases/download/2022.3.48217/MCreator.2022.3.Windows.64bit.exe","Mcreator.exe")
-        download_file("https://github.com/huanghongxun/HMCL/releases/download/release-3.5.5/HMCL-3.5.5.exe","HMCL.exe")
+        download_file("https://github.com/HMCL-dev/HMCL/releases/download/v3.5.8.249/HMCL-3.5.8.249.exe","HMCL.exe")
         download_file("https://download.oracle.com/java/19/archive/jdk-19.0.2_windows-x64_bin.exe","java-jdk-19.exe")
         print(f"[~] Starting")
         if not os.path.exists(destination_folder):
